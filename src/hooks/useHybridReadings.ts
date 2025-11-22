@@ -920,8 +920,32 @@ export function useHybridReadings() {
       new Date(a.date).getTime() - new Date(b.date).getTime()
     )
     
-    const firstReading = sortedReadings[0]
-    const lastReading = sortedReadings[sortedReadings.length - 1]
+    // Remove duplicate readings from the same day (keep only the last one per day)
+    const readingsByDay = new Map<string, typeof sortedReadings[0]>()
+    sortedReadings.forEach(reading => {
+      const dateKey = new Date(reading.date).toISOString().split('T')[0] // YYYY-MM-DD
+      readingsByDay.set(dateKey, reading) // Keep the last reading for each day
+    })
+    const uniqueReadings = Array.from(readingsByDay.values()).sort((a, b) => 
+      new Date(a.date).getTime() - new Date(b.date).getTime()
+    )
+    
+    // If we only have one unique reading (all readings from same day), we can't calculate consumption
+    if (uniqueReadings.length < 2) {
+      return {
+        consumption30Days: 0,
+        isProjected: false,
+        confidence: 'insufficient' as 'high' | 'medium' | 'low' | 'insufficient',
+        photosCount: monthlyReadings.length,
+        daysObserved: 0,
+        status: 'insufficient_data' as 'complete' | 'projected' | 'insufficient_data',
+        observedConsumption: 0,
+        observedConsumptionRaw: 0
+      }
+    }
+    
+    const firstReading = uniqueReadings[0]
+    const lastReading = uniqueReadings[uniqueReadings.length - 1]
     const firstDate = new Date(firstReading.date)
     const lastDate = new Date(lastReading.date)
     
@@ -950,7 +974,35 @@ export function useHybridReadings() {
       (lastDateOnly.getTime() - firstDateOnly.getTime()) / (1000 * 60 * 60 * 24)
     )
     
-    const daysObserved = Math.max(1, daysDifference)
+    // Ensure we have at least 1 day difference for valid projection
+    if (daysDifference < 1) {
+      return {
+        consumption30Days: 0,
+        isProjected: false,
+        confidence: 'insufficient' as 'high' | 'medium' | 'low' | 'insufficient',
+        photosCount: monthlyReadings.length,
+        daysObserved: 0,
+        status: 'insufficient_data' as 'complete' | 'projected' | 'insufficient_data',
+        observedConsumption: 0,
+        observedConsumptionRaw: 0
+      }
+    }
+    
+    const daysObserved = daysDifference
+    
+    // If no consumption observed, return 0
+    if (observedConsumption <= 0) {
+      return {
+        consumption30Days: 0,
+        isProjected: false,
+        confidence: 'insufficient' as 'high' | 'medium' | 'low' | 'insufficient',
+        photosCount: monthlyReadings.length,
+        daysObserved: daysObserved,
+        status: 'insufficient_data' as 'complete' | 'projected' | 'insufficient_data',
+        observedConsumption: 0,
+        observedConsumptionRaw: 0
+      }
+    }
     
     // Project to 30 days standard (now in kWh)
     const dailyAverage = observedConsumption / daysObserved
