@@ -1,7 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function HomePage() {
+  const { isAuthenticated, loading } = useAuth()
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Hero Section */}
@@ -30,20 +35,32 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <Button asChild size="lg" className="text-lg px-12 py-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
-                <Link href="/register">
-                  ✨ Get Started Free
-                </Link>
-              </Button>
-              <Button 
-                asChild 
-                size="lg" 
-                className="text-lg px-10 py-4 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white border-0 shadow-2xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105"
-              >
-                <Link href="/dashboard?demo=true">
-                  🎮 Try Demo
-                </Link>
-              </Button>
+              {loading ? (
+                <div className="text-white/70">Loading...</div>
+              ) : isAuthenticated ? (
+                <Button asChild size="lg" className="text-lg px-12 py-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
+                  <Link href="/dashboard">
+                    📊 Go to Dashboard
+                  </Link>
+                </Button>
+              ) : (
+                <>
+                  <Button asChild size="lg" className="text-lg px-12 py-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
+                    <Link href="/register">
+                      ✨ Get Started Free
+                    </Link>
+                  </Button>
+                  <Button 
+                    asChild 
+                    size="lg" 
+                    className="text-lg px-10 py-4 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white border-0 shadow-2xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Link href="/dashboard?demo=true">
+                      🎮 Try Demo
+                    </Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -93,23 +110,25 @@ export default function HomePage() {
       </div>
 
       {/* CTA Section */}
-      <div className="relative py-20">
-        <div className="container mx-auto px-4 text-center">
-          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-3xl p-12 border border-white/20">
-            <h2 className="text-4xl font-bold text-white mb-6">
-              Ready to Start Tracking?
-            </h2>
-            <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-              Start tracking your gas consumption today. Register for free and get instant insights into your energy usage.
-            </p>
-            <Button asChild size="lg" className="text-xl px-12 py-5 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white border-0 shadow-2xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105">
-              <Link href="/register">
-                ✨ Start Tracking Now
-              </Link>
-            </Button>
+      {!loading && !isAuthenticated && (
+        <div className="relative py-20">
+          <div className="container mx-auto px-4 text-center">
+            <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-3xl p-12 border border-white/20">
+              <h2 className="text-4xl font-bold text-white mb-6">
+                Ready to Start Tracking?
+              </h2>
+              <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+                Start tracking your gas consumption today. Register for free and get instant insights into your energy usage.
+              </p>
+              <Button asChild size="lg" className="text-xl px-12 py-5 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white border-0 shadow-2xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105">
+                <Link href="/register">
+                  ✨ Start Tracking Now
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
