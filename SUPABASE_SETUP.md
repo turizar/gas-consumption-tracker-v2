@@ -3,7 +3,7 @@
 ## 📋 Prerequisites
 
 1. **Supabase Account**: Create a free account at [supabase.com](https://supabase.com)
-2. **Google Gemini API Key**: Already configured ✅
+2. **Google Gemini API Key**: Get your free API key at [Google AI Studio](https://makersuite.google.com/app/apikey)
 
 ## 🛠️ Step-by-Step Setup
 
@@ -33,8 +33,9 @@
 2. Add the Supabase credentials:
 
 ```bash
-# Google Gemini API (already configured)
-GOOGLE_GEMINI_API_KEY=AIzaSyAgZUJImQCVhSU0QFDWFYFEOypPmErgJwc
+# Google Gemini API
+# Get your free API key at: https://makersuite.google.com/app/apikey
+GOOGLE_GEMINI_API_KEY=your_google_gemini_api_key_here
 
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
