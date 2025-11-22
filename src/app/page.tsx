@@ -53,6 +53,16 @@ export default function HomePage() {
                   <Button 
                     asChild 
                     size="lg" 
+                    variant="outline"
+                    className="text-lg px-10 py-4 bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm shadow-2xl transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Link href="/login">
+                      🔐 Login
+                    </Link>
+                  </Button>
+                  <Button 
+                    asChild 
+                    size="lg" 
                     className="text-lg px-10 py-4 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white border-0 shadow-2xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105"
                   >
                     <Link href="/dashboard?demo=true">
