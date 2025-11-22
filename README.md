@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Energy Consumption Tracker
 
-## Getting Started
+A modern web application for tracking electricity consumption with AI-powered meter reading capabilities.
 
-First, run the development server:
+## 🚀 Features
 
+- **Smart Photo Upload**: Take photos of your meter and let AI extract readings automatically
+- **Real-time Analytics**: Track consumption trends and get insights on your energy usage
+- **Cost Optimization**: Compare actual vs expected consumption and optimize your bills
+- **Modern UI**: Built with Next.js 15, TypeScript, and Tailwind CSS
+- **AI Integration**: OpenAI integration for intelligent meter reading extraction
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: Supabase
+- **AI**: OpenAI API
+- **UI Components**: Radix UI + Custom components
+- **Charts**: Recharts
+
+## 📦 Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd energy-consumption-tracker
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Configure your environment variables in `.env.local`:
+```env
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
 
-## Learn More
+# OpenAI Configuration
+OPENAI_API_KEY=your_openai_api_key_here
 
-To learn more about Next.js, take a look at the following resources:
+# App Configuration
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Start the development server:
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── api/               # API routes
+│   │   ├── ai/           # AI-related endpoints
+│   │   ├── auth/         # Authentication endpoints
+│   │   ├── billing/      # Billing endpoints
+│   │   └── readings/     # Meter reading endpoints
+│   ├── dashboard/        # Dashboard page
+│   ├── settings/         # Settings page
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # Home page
+├── components/           # Reusable components
+│   ├── charts/          # Chart components
+│   ├── forms/           # Form components
+│   ├── layout/          # Layout components
+│   └── ui/              # UI components
+├── constants/           # Application constants
+├── hooks/               # Custom React hooks
+├── lib/                 # Utility libraries
+│   ├── openai/          # OpenAI client configuration
+│   ├── supabase/        # Supabase client configuration
+│   ├── types/           # TypeScript type definitions
+│   └── utils/           # Utility functions
+```
+
+## 🎯 Current Status
+
+✅ **Completed:**
+- Project structure and configuration
+- Basic UI components (Button)
+- Home page with landing design
+- Dashboard and Settings placeholder pages
+- Tailwind CSS configuration
+- TypeScript setup
+- Utility functions for calculations
+
+🚧 **In Progress:**
+- Supabase integration
+- OpenAI API integration
+- Meter reading functionality
+- User authentication
+- Data visualization
+
+## 🔧 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📞 Support
+
+For support, please open an issue in the repository or contact the development team.
