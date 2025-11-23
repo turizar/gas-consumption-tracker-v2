@@ -123,16 +123,16 @@ function DashboardContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-white/5 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-white">Gas Readings</h1>
-              <p className="text-white/70 mt-1">Monitor your gas consumption in real-time</p>
+        <div className="container mx-auto px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">Gas Readings</h1>
+              <p className="text-white/70 mt-1 text-sm sm:text-base">Monitor your gas consumption in real-time</p>
               {isDemoMode && (
-                <div className="mt-2 flex items-center gap-2">
+                <div className="mt-2 flex flex-wrap items-center gap-2">
                   <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded-full border border-green-400/30">
                     🎮 Demo Mode
                   </span>
@@ -142,7 +142,7 @@ function DashboardContent() {
                 </div>
               )}
               {!isDemoMode && isAuthenticated && !isSupabaseConfigured && (
-                <div className="mt-2 flex items-center gap-2">
+                <div className="mt-2 flex flex-wrap items-center gap-2">
                   <span className="px-2 py-1 bg-yellow-500/20 text-yellow-300 text-xs rounded-full border border-yellow-400/30">
                     📱 Local Mode
                   </span>
@@ -152,32 +152,33 @@ function DashboardContent() {
                 </div>
               )}
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex flex-wrap gap-2 sm:gap-3 items-center w-full sm:w-auto">
               {isAuthenticated && user && (
-                <div className="text-white/70 text-sm mr-2">
+                <div className="text-white/70 text-xs sm:text-sm mr-2 hidden sm:block truncate max-w-[150px]">
                   {user.email}
                 </div>
               )}
-              <Button asChild variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <Button asChild variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-xs sm:text-sm px-2 sm:px-4">
                 <Link href="/">
-                  🏠 Home
+                  <span className="hidden sm:inline">🏠 </span>Home
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <Button asChild variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-xs sm:text-sm px-2 sm:px-4">
                 <Link href="/settings">
-                  ⚙️ Settings
+                  <span className="hidden sm:inline">⚙️ </span>Settings
                 </Link>
               </Button>
               {isAuthenticated ? (
                 <Button 
                   onClick={() => signOut()} 
                   variant="outline" 
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                  size="sm"
+                  className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-xs sm:text-sm px-2 sm:px-4"
                 >
                   Logout
                 </Button>
               ) : (
-                <Button asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                <Button asChild size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xs sm:text-sm px-2 sm:px-4">
                   <Link href="/register">
                     Register
                   </Link>
@@ -188,7 +189,7 @@ function DashboardContent() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 overflow-x-hidden">
         {/* Empty State - Show when no readings and not in demo mode */}
         {readings.length === 0 && !loading && !isDemoMode && (
           <EmptyState onUploadClick={() => {

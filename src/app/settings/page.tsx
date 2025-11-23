@@ -72,29 +72,29 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-white/5 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-white">Settings</h1>
-              <p className="text-white/70 mt-1">Configure your energy consumption tracking</p>
+        <div className="container mx-auto px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">Settings</h1>
+              <p className="text-white/70 mt-1 text-sm sm:text-base">Configure your energy consumption tracking</p>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex flex-wrap gap-2 sm:gap-3 items-center w-full sm:w-auto">
               {isAuthenticated && user && (
-                <div className="text-white/70 text-sm mr-2">
+                <div className="text-white/70 text-xs sm:text-sm mr-2 hidden sm:block truncate max-w-[150px]">
                   {user.email}
                 </div>
               )}
-              <Button asChild variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <Button asChild variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-xs sm:text-sm px-2 sm:px-4">
                 <Link href="/">
-                  🏠 Home
+                  <span className="hidden sm:inline">🏠 </span>Home
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <Button asChild variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-xs sm:text-sm px-2 sm:px-4">
                 <Link href="/dashboard">
-                  📊 Dashboard
+                  <span className="hidden sm:inline">📊 </span>Dashboard
                 </Link>
               </Button>
             </div>
@@ -102,7 +102,7 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 overflow-x-hidden">
         {!isAuthenticated ? (
           <Card className="bg-white/10 backdrop-blur-sm border-white/20 max-w-2xl mx-auto">
             <CardContent className="pt-6">
