@@ -1138,10 +1138,16 @@ export function useHybridReadings() {
 
     // Save to Supabase or localStorage
     if (isSupabaseConfigured && user) {
+      // Use UPSERT to insert or update (handles case where config doesn't exist yet)
       const { error } = await supabase
         .from('house_config')
-        .update({ ...updatedConfig, updated_at: new Date().toISOString() })
-        .eq('user_id', user.id)
+        .upsert({
+          user_id: user.id,
+          ...updatedConfig,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id'
+        })
 
       if (error) return { success: false, error: error.message }
       return { success: true }
