@@ -340,12 +340,13 @@ export function useHybridReadings() {
           reading_unit: 'm³'
         }
         
-        // Try to insert default config
+        // Try to insert default config (remove 'id' field, Supabase will generate UUID)
+        const { id, ...configWithoutId } = defaultConfig
         const { data: newConfig, error: insertError } = await supabase
           .from('house_config')
           .insert({
             user_id: user.id,
-            ...defaultConfig
+            ...configWithoutId
           })
           .select()
           .single()
@@ -1138,12 +1139,15 @@ export function useHybridReadings() {
 
     // Save to Supabase or localStorage
     if (isSupabaseConfigured && user) {
+      // Remove 'id' field if it's not a valid UUID (Supabase will generate it)
+      const { id, ...configWithoutId } = updatedConfig
+      
       // Use UPSERT to insert or update (handles case where config doesn't exist yet)
       const { error } = await supabase
         .from('house_config')
         .upsert({
           user_id: user.id,
-          ...updatedConfig,
+          ...configWithoutId,
           updated_at: new Date().toISOString()
         }, {
           onConflict: 'user_id'
